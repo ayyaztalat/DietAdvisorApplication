@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "634878438198",
+    "firebase_url": "https://dietadvisor-f37c8.firebaseio.com",
+    "project_id": "dietadvisor-f37c8",
+    "storage_bucket": "dietadvisor-f37c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634878438198:android:c0d447348da298ff",
+        "android_client_info": {
+          "package_name": "com.recuirtment.dietadvisorapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634878438198-9m0annn54sh4p278v5jf5a4rim3f30ml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNx5vqQXXpC7_7jXAP5Bq7omQEsAltbBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "634878438198-9m0annn54sh4p278v5jf5a4rim3f30ml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

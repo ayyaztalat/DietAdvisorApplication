@@ -1,6 +1,7 @@
 package com.recuirtment.dietadvisorapplication.activity;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +12,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.recuirtment.dietadvisorapplication.Firebase.profileModel;
 import com.recuirtment.dietadvisorapplication.Pre.Preferences;
 import com.recuirtment.dietadvisorapplication.R;
 
@@ -20,13 +29,14 @@ public class Signup extends AppCompatActivity {
     ImageView back_press;
     Spinner gender_spinner;
     Preferences preferences;
+    FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
         preferences=new Preferences(this);
-
+        firebaseAuth = FirebaseAuth.getInstance();
         user_name_field=findViewById(R.id.user_name_field);
         mail_input_field=findViewById(R.id.mail_input_field);
         password_input_field=findViewById(R.id.password_input_field);
@@ -93,7 +103,8 @@ public class Signup extends AppCompatActivity {
         }
     }
 
-    private void callStartAPI(String username, String email, String pass, String ages, String phone,String address,String gender) {
+    private DatabaseReference mDatabase;
+    private void callStartAPI(final String username, final String email, final String pass, final String ages, final String phone, final String address, final String gender) {
         preferences.setEmail(email);
         preferences.setUsername(username);
         preferences.setPass(pass);
@@ -102,7 +113,43 @@ public class Signup extends AppCompatActivity {
         preferences.setAddress(address);
         preferences.setGender(gender);
 
-        startActivity(new Intent(getApplicationContext(),HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        finish();
+
+        firebaseAuth.createUserWithEmailAndPassword(email, pass)
+                .addOnCompleteListener(Signup.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Toast.makeText(Signup.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                     //   progressBar.setVisibility(View.GONE);
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(Signup.this, "Authentication failed." + task.getException(),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                           /* startActivity(new Intent(Signup.this, HomeActivity.class));
+                            finish();*/
+                           callDataSavingAPI(email,username,pass,ages,phone,address,gender);
+                        }
+                    }
+                });
+
+       /* startActivity(new Intent(getApplicationContext(),HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        finish();*/
+    }
+
+    private void callDataSavingAPI(String email, String username, String pass, String ages, String phone, String address, String gender) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user=firebaseAuth.getCurrentUser();
+
+        assert user != null;
+        String userId = user.getUid();
+
+        profileModel model=new profileModel(username,email,pass,ages,phone,address,gender);
+
+
+        mDatabase.child(userId).setValue(model);
+
+
     }
 }

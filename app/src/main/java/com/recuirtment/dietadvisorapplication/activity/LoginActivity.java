@@ -2,6 +2,7 @@ package com.recuirtment.dietadvisorapplication.activity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,6 +16,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.recuirtment.dietadvisorapplication.Pre.Preferences;
 import com.recuirtment.dietadvisorapplication.R;
 
@@ -29,13 +34,18 @@ public class LoginActivity extends AppCompatActivity {
     private Boolean checking;
     Preferences preferences;
     private String TAG="Login Class";
-
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        auth = FirebaseAuth.getInstance();
 
+        if (auth.getCurrentUser() != null) {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
+        }
         preferences=new Preferences(this);
         input_email=findViewById(R.id.input_email);
         input_password=findViewById(R.id.input_password);
@@ -142,17 +152,40 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void checkLoginProcess(String email, String password) {
+    private void checkLoginProcess(String email, final String password) {
         if (!email.equalsIgnoreCase(preferences.getEmail())){
             Toast.makeText(this, "Wrong Email Address", Toast.LENGTH_SHORT).show();
         }else if (!password.equalsIgnoreCase(preferences.getPass())){
             Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
         }else{
-            preferences.setTempEmail(email);
-            preferences.setTempPassword(password);
+           /* preferences.setTempEmail(email);
+            preferences.setTempPassword(password);*/
 
-            startActivity(new Intent(getApplicationContext(),HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            finish();
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            //progressBar.setVisibility(View.GONE);
+                            if (!task.isSuccessful()) {
+                                // there was an error
+                                if (password.length() < 6) {
+                                    input_password.setError("Password size is 9 digits");
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Wrong username and Password", Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    });
+
+            /*startActivity(new Intent(getApplicationContext(),HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            finish();*/
         }
     }
 

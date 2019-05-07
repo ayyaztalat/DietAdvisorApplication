@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.recuirtment.dietadvisorapplication.BuildConfig;
 import com.recuirtment.dietadvisorapplication.Pre.Preferences;
 import com.recuirtment.dietadvisorapplication.R;
+import com.recuirtment.dietadvisorapplication.chat_tes.MainActivity;
 
 public class FindService extends AppCompatActivity {
     ImageView back_press;
@@ -60,7 +61,7 @@ public class FindService extends AppCompatActivity {
         add_another_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),CHatActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
         });
