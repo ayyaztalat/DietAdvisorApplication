@@ -51,7 +51,7 @@ public class FindService extends AppCompatActivity {
             add_another_service.setEnabled(true);
         }
 
-        add_another_service.setOnClickListener(new View.OnClickListener() {
+        added_services.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),FormDesease.class));
@@ -62,7 +62,7 @@ public class FindService extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
+
             }
         });
     }

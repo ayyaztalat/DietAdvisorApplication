@@ -44,6 +44,7 @@ public class MainActivity extends ListActivity {
         setTitle("Chatting as " + mUsername);
 
         // Setup our Firebase mFirebaseRef
+        Firebase.setAndroidContext(this);
         mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
 
         // Setup our input methods. Enter key on the keyboard or pushing the send button

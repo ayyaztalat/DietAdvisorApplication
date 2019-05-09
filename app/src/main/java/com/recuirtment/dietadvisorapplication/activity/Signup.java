@@ -127,8 +127,7 @@ public class Signup extends AppCompatActivity {
                             Toast.makeText(Signup.this, "Authentication failed." + task.getException(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                           /* startActivity(new Intent(Signup.this, HomeActivity.class));
-                            finish();*/
+                           /* */
                            callDataSavingAPI(email,username,pass,ages,phone,address,gender);
                         }
                     }
@@ -149,7 +148,8 @@ public class Signup extends AppCompatActivity {
 
 
         mDatabase.child(userId).setValue(model);
-
+        startActivity(new Intent(Signup.this, HomeActivity.class));
+        finish();
 
     }
 }
