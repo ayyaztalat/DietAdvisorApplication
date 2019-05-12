@@ -9,7 +9,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
-        <activity android:name=".activity.FormDesease"></activity>
+        <activity android:name=".activity.NeutritianClass"></activity>
+        <activity android:name=".activity.NeutrianAddClass" />
+        <activity android:name=".activity.FormDesease" />
         <activity android:name=".activity.FindService" />
         <activity android:name=".activity.EditProfileMain" />
         <activity android:name=".activity.EditProfile" />
@@ -24,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" />
-      <activity android:name=".chat_tes.MainActivity"/>
+        <activity android:name=".chat_tes.MainActivity" />
     </application>
 
 </manifest>

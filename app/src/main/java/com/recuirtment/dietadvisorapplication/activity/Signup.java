@@ -28,6 +28,7 @@ public class Signup extends AppCompatActivity {
     TextView next_button;
     ImageView back_press;
     Spinner gender_spinner;
+    Spinner provide_value;
     Preferences preferences;
     FirebaseAuth firebaseAuth;
     @Override
@@ -44,6 +45,7 @@ public class Signup extends AppCompatActivity {
         address_input_field=findViewById(R.id.address_input_field);
         age=findViewById(R.id.age);
         gender_spinner=findViewById(R.id.gender_spinner);
+        provide_value=findViewById(R.id.provide_value);
         phone_input_field=findViewById(R.id.phone_input_field);
         next_button=findViewById(R.id.next_button);
         back_press=findViewById(R.id.back_press);
@@ -72,6 +74,7 @@ public class Signup extends AppCompatActivity {
         String phone=phone_input_field.getText().toString().trim();
         String address=address_input_field.getText().toString().trim();
         String gender=gender_spinner.getSelectedItem().toString();
+        String provider=provide_value.getSelectedItem().toString();
 
 
         if (TextUtils.isEmpty(username)){
@@ -97,14 +100,14 @@ public class Signup extends AppCompatActivity {
             }else if (phone.length()<10){
                 phone_input_field.setError("Phone number is not valid");
             }else {
-                callStartAPI(username,email,pass,ages,phone,address,gender);
+                callStartAPI(username,email,pass,ages,phone,address,gender,provider);
             }
 
         }
     }
 
     private DatabaseReference mDatabase;
-    private void callStartAPI(final String username, final String email, final String pass, final String ages, final String phone, final String address, final String gender) {
+    private void callStartAPI(final String username, final String email, final String pass, final String ages, final String phone, final String address, final String gender, final String provider) {
         preferences.setEmail(email);
         preferences.setUsername(username);
         preferences.setPass(pass);
@@ -112,6 +115,7 @@ public class Signup extends AppCompatActivity {
         preferences.setPhone(phone);
         preferences.setAddress(address);
         preferences.setGender(gender);
+        preferences.setProvider(provider);
 
 
         firebaseAuth.createUserWithEmailAndPassword(email, pass)
@@ -128,7 +132,7 @@ public class Signup extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                            /* */
-                           callDataSavingAPI(email,username,pass,ages,phone,address,gender);
+                           callDataSavingAPI(email,username,pass,ages,phone,address,gender,provider);
                         }
                     }
                 });
@@ -137,17 +141,17 @@ public class Signup extends AppCompatActivity {
         finish();*/
     }
 
-    private void callDataSavingAPI(String email, String username, String pass, String ages, String phone, String address, String gender) {
+    private void callDataSavingAPI(String email, String username, String pass, String ages, String phone, String address, String gender, String provider) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user=firebaseAuth.getCurrentUser();
 
         assert user != null;
         String userId = user.getUid();
 
-        profileModel model=new profileModel(username,email,pass,ages,phone,address,gender);
+        profileModel model=new profileModel(username,email,pass,ages,phone,address,gender,provider);
 
 
-        mDatabase.child(userId).setValue(model);
+        mDatabase.child(userId).child("users").setValue(model);
         startActivity(new Intent(Signup.this, HomeActivity.class));
         finish();
 

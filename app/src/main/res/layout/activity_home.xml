@@ -104,11 +104,13 @@
         app:layout_constraintStart_toStartOf="@+id/welcome_top"
         app:layout_constraintTop_toBottomOf="@+id/welcome"
         app:layout_constraintVertical_bias="0.172" />
+
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
+
+
         android:layout_height="wrap_content"
-
-
         android:text="OR"
         android:textColor="@color/white"
         android:textSize="@dimen/_16sdp"
@@ -135,6 +137,26 @@
         app:layout_constraintTop_toBottomOf="@+id/welcome_top"
         app:layout_constraintVertical_bias="0.268" />
 
+    <TextView
+        android:id="@+id/provide_neutrians"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/shade_circle"
+        android:gravity="center"
+        android:padding="@dimen/_15sdp"
+        android:text="Give \nNeutrians \ndiet"
+        android:textColor="@color/orange"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_top"
+        app:layout_constraintVertical_bias="0.42" />
 
     <TextView
         android:id="@+id/Provide_service"

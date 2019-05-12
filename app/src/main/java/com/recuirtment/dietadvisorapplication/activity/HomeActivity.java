@@ -28,6 +28,8 @@ public class HomeActivity extends AppCompatActivity {
     TextView share_konnect,Provide_service,find_service;
     FirebaseAuth auth;
     DatabaseReference mDatabase;
+    TextView provide_neutrians;
+    String provider_value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,23 @@ public class HomeActivity extends AppCompatActivity {
 
         preferences.setLoginCheck(true);
         share_konnect=findViewById(R.id.share_konnect);
+        provide_neutrians=findViewById(R.id.provide_neutrians);
+
+
+        provider_value=preferences.getProivder();
+
+        if (provider_value.equalsIgnoreCase("client")){
+            provide_neutrians.setVisibility(View.GONE);
+        }else{
+            provide_neutrians.setVisibility(View.VISIBLE);
+        }
+
+        provide_neutrians.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),NeutrianAddClass.class));
+            }
+        });
 
         logout_icon=findViewById(R.id.logout_icon);
         logout_icon.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                 preferences.setPhone(model.phone);
                 preferences.setPass(model.pass);
                 preferences.setEmail(model.email);
+                preferences.setProvider(model.provider);
 
             }
 

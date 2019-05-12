@@ -154,4 +154,11 @@ public class Preferences {
     public String getVege() {
       return   Prefs.getString("vege","");
     }
+
+    public void setProvider(String provider) {
+        Prefs.putString("Provider",provider);
+    }
+    public String getProivder(){
+        return Prefs.getString("Provider","client");
+    }
 }

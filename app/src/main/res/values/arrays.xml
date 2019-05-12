@@ -4,4 +4,9 @@
         <item>male</item>
         <item>female</item>
     </string-array>
+    <string-array name="provider">
+        <item>client</item>
+        <item>Neutrianist</item>
+
+    </string-array>
 </resources>

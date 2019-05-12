@@ -1,5 +1,7 @@
 package com.recuirtment.dietadvisorapplication.Firebase;
 
+import android.widget.Spinner;
+
 public class profileModel {
    public String username;
     public String email;
@@ -8,11 +10,12 @@ public class profileModel {
     public String phone;
     public String address;
     public String gender;
+    public String provider;
 
-    public profileModel() {
-    }
 
-    public profileModel(String username, String email, String pass, String ages, String phone, String address, String gender) {
+
+
+    public profileModel(String username, String email, String pass, String ages, String phone, String address, String gender,String provider) {
         this.username = username;
         this.email = email;
         this.pass = pass;
@@ -20,6 +23,7 @@ public class profileModel {
         this.phone = phone;
         this.address = address;
         this.gender = gender;
+        this.provider=provider;
     }
 
    /* public String getUserName() {

@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.jjoe64:graphview:4.2.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
-    compile 'com.firebase:firebase-client-android:2.4.0'
+    implementation 'com.firebase:firebase-client-android:2.4.0'
+    implementation 'com.firebaseui:firebase-ui-database:0.4.0'
 }
 apply plugin: 'com.google.gms.google-services'
